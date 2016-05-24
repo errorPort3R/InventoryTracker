@@ -37,7 +37,7 @@ public class GameManager
             while (input.hasNext())
             {
                 String line = input.nextLine();
-                String[] fields = line.split(", ");
+                String[] fields = line.split(",");
                 String userName = fields[0];
                 String password = fields[1];
                 newPlayer = new PlayerData(userName, password);
@@ -54,7 +54,7 @@ public class GameManager
         }
         catch(Exception e)
         {
-            System.err.printf("\nNot a Valid File!\n");
+            System.err.printf("\nNot a Valid File!(1)\n");
         }
     }
 
@@ -74,7 +74,7 @@ public class GameManager
         }
         catch(Exception e)
         {
-            System.err.printf("\nNot a Valid File!");
+            System.err.printf("\nNot a Valid File!(2)");
         }
     }
 
@@ -86,7 +86,7 @@ public class GameManager
         char createNewPlayer = 'z';
         PlayerData tempPlayer = null;
 
-        System.out.printf("\nEnter User Name(type quit to exit): ");
+        System.out.printf("\nEnter User Name: ");
         userName = input.nextLine();
         for (int i = 0; i < Players.size(); i++)
         {

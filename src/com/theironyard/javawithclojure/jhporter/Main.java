@@ -1,11 +1,6 @@
 package com.theironyard.javawithclojure.jhporter;
 
-import sun.tools.asm.CatchData;
 
-import java.io.File;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Scanner;
 
 public class Main {
@@ -25,7 +20,7 @@ public class Main {
         String password;
         String optionsMenuChoice;
         Scanner input = new Scanner(System.in);
-        String FILE_LOC = "";
+        String FILE_LOC = "/Users/jeffryporter/Desktop/Players.txt";
 
 
         //load presaved values

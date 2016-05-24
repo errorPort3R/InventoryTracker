@@ -40,6 +40,11 @@ public class PlayerData {
         return inventoryQuantity.get(index);
     }
 
+    public void updateInventoryQty(int index, int qty)
+    {
+        inventoryQuantity.set(index, qty);
+    }
+
     public String removeItem(int index)
     {
         return inventoryItem.remove(index);

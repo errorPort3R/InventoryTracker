@@ -83,19 +83,21 @@ public class GameManager
         PlayerData player;
         String userName;
         String password;
-        boolean isFound=false;
-        char createNewPlayer = '';
+        char createNewPlayer = 'z';
+        PlayerData tempPlayer = null;
 
         System.out.printf("\nEnter User Name(type quit to exit): ");
         userName = input.nextLine();
-        for (int i = 0; i<Players.size(); i++)
-            if(Players.get(i).getName().equals(userName))
+        for (int i = 0; i < Players.size(); i++)
+        {
+            if (Players.get(i).getName().equals(userName))
             {
                 System.out.printf("\nEnter Password: ");
                 password = input.nextLine();
                 if (Players.get(i).getPassword().equals(password))
                 {
-                    isFound = true;
+                    tempPlayer = Players.get(i);
+                    i = Players.size();
                 }
                 else
                 {
@@ -105,12 +107,120 @@ public class GameManager
             else
             {
                 System.out.printf("\nWould you like to create a new player?[y/n]");
-
+                createNewPlayer = input.nextLine().toLowerCase().charAt(0);
+                if (createNewPlayer == 'y')
+                {
+                    System.out.printf("\nEnter User Name(type quit to exit): ");
+                    userName = input.nextLine();
+                    System.out.printf("\nEnter Password: ");
+                    password = input.nextLine();
+                    tempPlayer = new PlayerData(userName, password);
+                    Players.add(tempPlayer);
+                }
             }
-
-
-
-
-        return player;
+        }
+        return tempPlayer;
     }
+
+    public void addItemMenuOption(PlayerData player, Scanner input)
+    {
+        String name;
+        String tempInt;
+        int qty;
+
+        System.out.printf("\nWhat is the name of the item you wish to add? ");
+        name = input.nextLine();
+        System.out.printf("\nAnd how many %s's are we stockpiling? ");
+        tempInt = input.nextLine();
+        try
+        {
+            qty = Integer.valueOf(tempInt);
+
+        }
+        catch(Exception e)
+        {
+
+        }
+    }
+
+    public void removeItemFromInventory(PlayerData player, Scanner input)
+    {
+        String name;
+        String tempInt;
+        int choice;
+        int qty;
+
+        System.out.printf("\nWhich of the following would you like to remove?\n");
+        for(int i=0;i<player.getInventoryLength();i++)
+        {
+            System.out.printf("%d. %s\n", i+1, player.getInventoryItem(i));
+        }
+        tempInt = input.nextLine();
+        try
+        {
+            choice = Integer.valueOf(tempInt);
+            choice--;
+            name = player.removeItem(choice);
+            qty = player.removeQuantity(choice);
+            System.out.printf("You have dropped %d %s(s) from your inventory.", qty, name);
+        }
+        catch (Exception e)
+        {
+            System.err.printf("Not a Valid Selection!");
+        }
+    }
+
+    public void updateItemQuantity(PlayerData player, Scanner input)
+    {
+        String name;
+        String tempInt;
+        int choice;
+        int qty;
+
+        System.out.printf("\nWhich of the following would you like to change the inventory quantity?\n");
+        for(int i=0;i<player.getInventoryLength();i++)
+        {
+            System.out.printf("%d. %s\n", i+1, player.getInventoryItem(i));
+        }
+        tempInt = input.nextLine();
+        try
+        {
+            choice = Integer.valueOf(tempInt);
+            choice--;
+            System.out.printf("\nWhat would you like the new quantity to be?");
+            tempInt = input.nextLine();
+            try
+            {
+                qty = Integer.valueOf(tempInt);
+                if (player.getInventoryQuantity(choice)>qty)
+                {
+                    player.updateInventoryQty(choice, qty);
+                }
+                else if (player.getInventoryQuantity(choice)<=qty)
+                {
+                    name = player.removeItem(choice);
+                    qty = player.removeQuantity(choice);
+                    System.out.printf("You have dropped %d %s(s) from your inventory.", qty, name);
+                }
+                else
+                {
+                    System.err.printf("\nNot a valid quantity!");
+                }
+            }
+            catch (Exception e)
+            {
+                System.err.printf("\nNot a valid quantity!");
+            }
+        }
+        catch (Exception e)
+        {
+            System.err.printf("Not a Valid Selection!");
+        }
+    }
+
+    public void Save(String fileLoc)
+    {
+        savePlayers(fileLoc);
+    }
+
 }

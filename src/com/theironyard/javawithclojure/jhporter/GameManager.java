@@ -91,6 +91,7 @@ public class GameManager
                     output.printf("%s, %d, ", Players.get(i).getInventoryItem(j), Players.get(i).getInventoryQuantity(j));
                 }
             }
+            output.close();
         }
         catch(Exception e)
         {

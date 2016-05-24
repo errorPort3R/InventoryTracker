@@ -11,7 +11,7 @@ public class Main
         GameManager theGameManager = GameManager.getTheGameManager();
         PlayerData player = null;
         char run = 'y';
-        boolean optionsRun = true;
+        boolean optionsRun;
         String userName;
         String password;
         String optionsMenuChoice;
@@ -25,6 +25,7 @@ public class Main
         //run program
         while (run == 'y')
         {
+            optionsRun = true;
             while (player == null)
             {
                 player = theGameManager.verifyIdentity(input);
@@ -61,7 +62,7 @@ public class Main
                     }
                     case "5":
                     {
-                        theGameManager.Save(FILE_LOC);
+                        //theGameManager.Save(FILE_LOC);
                         optionsRun = false;
                         player = null;
                         break;

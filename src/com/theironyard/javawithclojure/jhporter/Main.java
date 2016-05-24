@@ -35,7 +35,7 @@ public class Main
             {
                 System.out.printf("\n\nPlease Select From The following Menu:");
                 System.out.printf("\n1. Add item to inventory\n2. Remove item from inventory\n3. Update quantity in inventory");
-                System.out.printf("\n4. Log out to main menu \n");
+                System.out.printf("\n4. Show inventory \n5. Log out to main menu\n");
                 optionsMenuChoice = input.nextLine();
                 switch (optionsMenuChoice)
                 {
@@ -56,22 +56,21 @@ public class Main
                     }
                     case "4":
                     {
-                        //theGameManager.Save(FILE_LOC);
+                        theGameManager.showInventory(player, input);
+                        break;
+                    }
+                    case "5":
+                    {
+                        theGameManager.Save(FILE_LOC);
                         optionsRun = false;
                         player = null;
                         break;
                     }
-                    /*case "5":
-                    {
-                        theGameManager.Save(FILE_LOC);
-                        break;
-                    }*/
                     default:
                     {
                         System.err.printf("\n Not a valid choice!");
                         break;
                     }
-
                 }
             }
             System.out.printf("\nLog in again?[y/n]");

@@ -78,10 +78,12 @@ public class GameManager
 
     public void savePlayers(String fileLoc)
     {
-        try {
+        try
+        {
+            PrintWriter output = new PrintWriter(new File(fileLoc));
             for (int i = 0; i < Players.size(); i++)
             {
-                PrintWriter output = new PrintWriter(fileLoc);
+                //PrintWriter output = new PrintWriter(fileLoc);
                 output.printf("\n%s, %s, ",Players.get(i).getName(), Players.get(i).getPassword());
 
                 for (int j =0;j<Players.get(i).getInventoryLength();j++)
@@ -182,7 +184,6 @@ public class GameManager
         }
     }
 
-
     public void updateItemQuantity(PlayerData player, Scanner input)
     {
         String name;
@@ -236,4 +237,11 @@ public class GameManager
         savePlayers(fileLoc);
     }
 
+    public void showInventory(PlayerData player, Scanner input)
+    {
+        for(int i=0;i<player.getInventoryLength();i++)
+        {
+            System.out.printf("%d. [%d] %s\n", i+1,player.getInventoryQuantity(i), player.getInventoryItem(i));
+        }
+    }
 }

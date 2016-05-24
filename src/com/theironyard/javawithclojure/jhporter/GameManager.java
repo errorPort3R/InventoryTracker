@@ -12,7 +12,7 @@ public class GameManager
 {
     //Declare Variables
     private static GameManager theGameManager;
-    private ArrayList<PlayerData> Players;
+    private ArrayList<PlayerData> Players = new ArrayList<>();
     //constructor
     private GameManager()
     {
@@ -31,7 +31,7 @@ public class GameManager
     public void loadPlayers(String fileLoc)
     {
         PlayerData newPlayer;
-        try
+        /*try
         {
             Scanner input = new Scanner(new File(fileLoc));
             while (input.hasNext())
@@ -54,8 +54,26 @@ public class GameManager
         }
         catch(Exception e)
         {
-            System.err.printf("\nNot a Valid File!(1)\n");
-        }
+            System.err.printf("\nNot a Valid File!\n");
+        }*/
+        newPlayer = new PlayerData("James", "1234");
+        newPlayer.addItem("Candle", 6);
+        newPlayer.addItem("Hot Tamales", 12);
+        newPlayer.addItem("Boots", 2);
+        Players.add(newPlayer);
+        newPlayer = new PlayerData("Anna", "1234");
+        newPlayer.addItem("House", 1);
+        newPlayer.addItem("Chair", 2);
+        newPlayer.addItem("Futon", 2);
+        newPlayer.addItem("Table,", 6);
+        Players.add(newPlayer);
+        newPlayer = new PlayerData("Jeff", "1234");
+        newPlayer.addItem("Bag", 6);
+        newPlayer.addItem("Cat", 1);
+        newPlayer.addItem("Laptop", 5);
+        newPlayer.addItem("Notebook", 15);
+        Players.add(newPlayer);
+        System.out.printf("\nPlayers loaded.");
     }
 
     public void savePlayers(String fileLoc)
@@ -74,13 +92,12 @@ public class GameManager
         }
         catch(Exception e)
         {
-            System.err.printf("\nNot a Valid File!(2)");
+            System.err.printf("\nNot a Valid File!");
         }
     }
 
     public PlayerData verifyIdentity(Scanner input)
     {
-        PlayerData player;
         String userName;
         String password;
         char createNewPlayer = 'z';
@@ -88,35 +105,30 @@ public class GameManager
 
         System.out.printf("\nEnter User Name: ");
         userName = input.nextLine();
-        for (int i = 0; i < Players.size(); i++)
-        {
-            if (Players.get(i).getName().equals(userName))
-            {
+        for (int i = 0; i < Players.size(); i++) {
+            if (Players.get(i).getName().equals(userName)) {
                 System.out.printf("\nEnter Password: ");
                 password = input.nextLine();
-                if (Players.get(i).getPassword().equals(password))
-                {
+                if (Players.get(i).getPassword().equals(password)) {
                     tempPlayer = Players.get(i);
                     i = Players.size();
-                }
-                else
-                {
-                    System.err.printf("\nInvalid Credentials!");
+                } else {
+                    System.err.printf("Invalid Credentials!\n");
                 }
             }
-            else
+        }
+        if (tempPlayer ==  null)
+        {
+            System.out.printf("\nWould you like to create a new player?[y/n]");
+            createNewPlayer = input.nextLine().toLowerCase().charAt(0);
+            if (createNewPlayer == 'y')
             {
-                System.out.printf("\nWould you like to create a new player?[y/n]");
-                createNewPlayer = input.nextLine().toLowerCase().charAt(0);
-                if (createNewPlayer == 'y')
-                {
-                    System.out.printf("\nEnter User Name(type quit to exit): ");
-                    userName = input.nextLine();
-                    System.out.printf("\nEnter Password: ");
-                    password = input.nextLine();
-                    tempPlayer = new PlayerData(userName, password);
-                    Players.add(tempPlayer);
-                }
+                System.out.printf("\nEnter User Name(type quit to exit): ");
+                userName = input.nextLine();
+                System.out.printf("\nEnter Password: ");
+                password = input.nextLine();
+                tempPlayer = new PlayerData(userName, password);
+                Players.add(tempPlayer);
             }
         }
         return tempPlayer;
@@ -130,16 +142,16 @@ public class GameManager
 
         System.out.printf("\nWhat is the name of the item you wish to add? ");
         name = input.nextLine();
-        System.out.printf("\nAnd how many %s's are we stockpiling? ");
+        System.out.printf("\nAnd how many %s's are we stockpiling? ", name);
         tempInt = input.nextLine();
         try
         {
             qty = Integer.valueOf(tempInt);
-
+            player.addItem(name, qty);
         }
         catch(Exception e)
         {
-
+            System.err.printf("\nNot a Valid amount!");
         }
     }
 
@@ -153,7 +165,7 @@ public class GameManager
         System.out.printf("\nWhich of the following would you like to remove?\n");
         for(int i=0;i<player.getInventoryLength();i++)
         {
-            System.out.printf("%d. %s\n", i+1, player.getInventoryItem(i));
+            System.out.printf("%d. [%d] %s\n", i+1,player.getInventoryQuantity(i), player.getInventoryItem(i));
         }
         tempInt = input.nextLine();
         try
@@ -170,6 +182,7 @@ public class GameManager
         }
     }
 
+
     public void updateItemQuantity(PlayerData player, Scanner input)
     {
         String name;
@@ -180,7 +193,7 @@ public class GameManager
         System.out.printf("\nWhich of the following would you like to change the inventory quantity?\n");
         for(int i=0;i<player.getInventoryLength();i++)
         {
-            System.out.printf("%d. %s\n", i+1, player.getInventoryItem(i));
+            System.out.printf("%d. [%d] %s\n", i+1,player.getInventoryQuantity(i), player.getInventoryItem(i));
         }
         tempInt = input.nextLine();
         try
